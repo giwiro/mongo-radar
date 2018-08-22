@@ -24,10 +24,11 @@ Extensible and multithread python3 script that scans provided ips, and looks for
 ## Requirements
 
 - Tor sock4 proxy running on port 9050
-- Proxychains installed (binary `proxychains4` on path)
-- Python 3
-- Pipenv
-- Make
+- proxychains installed (binary `proxychains4` on path)
+- python 3
+- pipenv
+- make
+- mongodump
 
 ## Install
 Run the `install` goal

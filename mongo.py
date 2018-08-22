@@ -4,7 +4,7 @@ from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure, ConfigurationError
 from writer import write_log
 
-class Connection(threading.Thread):
+class ConnectionWorker(threading.Thread):
 
     def __init__(self, queue, id):
         threading.Thread.__init__(self)

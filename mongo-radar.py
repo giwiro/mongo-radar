@@ -38,7 +38,7 @@ if __name__ == "__main__":
     q = queue.Queue()
 
     for j in range(WORKERS):
-        worker = Connection(q, j);
+        worker = ConnectionWorker(q, j);
         worker.setDaemon(True)
         worker.start()
 
