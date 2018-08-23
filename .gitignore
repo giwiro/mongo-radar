@@ -103,4 +103,8 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# out dir
+out/
 
+# Jetbrains
+.idea/

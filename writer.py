@@ -1,4 +1,3 @@
-
-def write_log(text):
-    with open("loot.log", "a+") as file:
+def write_log(file: str, text: str):
+    with open(file, "a+") as file:
         file.write(text)

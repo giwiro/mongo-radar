@@ -18,8 +18,30 @@
     __//__||__\\__                                                               
    '--------------'                                                                
 ```
-Extensible and multithread python3 script that scans provided ips, and looks for default mongodb unauthorized access, through Tor sock4 proxy using proxychains and writes it into a log file. 
+Extensible and multithread python3 script that scans and do some operations over provided ips, and looks for default mongodb unauthorized access, through Tor sock4 proxy using proxychains and writes it into a log file. 
 
+## Usage
+
+```
+./mongo-radar [-h] [--out INPUT_OUT] [--ips INPUT_IPS]
+                   [--workers INPUT_W] [--dump] [--kidnap INPUT_ACCOUNT]
+                   
+optional arguments:
+  -h, --help            show this help message and exit
+  --out INPUT_OUT       Define the ouput folder location.
+  --ips INPUT_IPS       Define list of ips or range of ips to scan. Ex:
+                        127.0.0.1,127.0.0.2-255
+  --workers INPUT_WORKERS
+                        Define the number of worker threads (> 4) that will be
+                        doing the jobs simultaneously.
+  --dump                Dumps all the databases found and saves it into out
+                        directory.
+  --kidnap INPUT_ACCOUNT
+                        Monero account to show in the ransom after kidnap the
+                        database (including local and admin).
+
+
+```
 
 ## Requirements
 
@@ -29,6 +51,7 @@ Extensible and multithread python3 script that scans provided ips, and looks for
 - pipenv
 - make
 - mongodump
+
 
 ## Install
 Run the `install` goal
