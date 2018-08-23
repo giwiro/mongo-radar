@@ -1,4 +1,4 @@
-# mongo-radar
+# :satellite: mongo-radar
 ```
          ,-.                                                                       
         / \  `.  __..-,O    88888b.d88b.  .d88b. 88888b.  .d88b.  .d88b.          
@@ -18,7 +18,10 @@
     __//__||__\\__                                                               
    '--------------'                                                                
 ```
-Extensible and multithread python3 script that scans and do some operations over provided ips, and looks for default mongodb unauthorized access, through Tor sock4 proxy using proxychains and writes it into a log file. 
+Multithread python3 script that scans and do some operations over provided ips, and looks for default mongodb 
+unauthorized access, through Tor sock4 proxy using proxychains and writes it into a log file.
+
+ 
 
 ## Usage
 
