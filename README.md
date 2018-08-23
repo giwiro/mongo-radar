@@ -21,7 +21,19 @@
 Multithread python3 script that scans and do some operations over provided ips, and looks for default mongodb 
 unauthorized access, through Tor sock4 proxy using proxychains and writes it into a log file.
 
- 
+
+
+[<img src="https://1.bp.blogspot.com/-rfPgrl8ikNE/VNx00l4Un9I/AAAAAAAAhzg/CR9GhLSl0_w/s728-e100/mongodb-database-hacking.jpg" width="350">](https://thehackernews.com/2015/02/mongodb-database-hacking.html)
+
+There are tons of mongo databases without any type of authentication out there in the wild;
+a lot of them [get hacked](https://docs.google.com/spreadsheets/d/1QonE9oeMOQHVh8heFIyeqrjfKEViL0poLnY8mAakKhM/edit#gid=1781677175),
+that's why we should be really careful when configuring the Database.
+
+Just **for research purposes** I developed an automated tool to discover, dumps and symmetric encrypt all the collections
+in the discovered mongodb list. 
+In order to stay anonymous we use [Tor](https://www.torproject.org/) service running as a SOCK4 proxy,
+and [proxychains](http://proxychains.sourceforge.net/) to capture all tcp requests made by `mongo-radar`
+and proxy them to the Tor SOCK4 port. 
 
 ## Usage
 
@@ -45,6 +57,13 @@ optional arguments:
 
 
 ```
+
+## Legal Disclamer
+```
+The author does not hold any responsibility for the bad use of this tool,
+remember that attacking targets without prior consent is illegal and punished by law.
+```
+
 
 ## Requirements
 
