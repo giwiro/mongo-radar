@@ -8,6 +8,8 @@ from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure, ConfigurationError
 from writer import write_log
 
+DEFAULT_TIMEOUT = 10000
+
 
 class ConnectionWorkerOptions(NamedTuple):
     out: str
@@ -82,7 +84,7 @@ class ConnectionWorker(threading.Thread):
             ip = self.queue.get()
             print(f"[Worker {self.id}] => Started {ip}")
             try:
-                client = MongoClient(ip, serverSelectionTimeoutMS=3000)
+                client = MongoClient(ip, serverSelectionTimeoutMS=DEFAULT_TIMEOUT)
                 dbs, version = self.test_open_connection(client, ip)
                 if dbs is not None and version is not None:
                     dumped_dbs = []

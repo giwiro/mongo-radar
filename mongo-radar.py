@@ -73,6 +73,7 @@ def parse_str_ips(ips_str: str) -> List[str]:
         if len(oct) != 4:
             raise Exception("Malformed ip")
 
+        # Watch dis magnificent O(5)
         f_min, f_max = parse_min_max_range(oct[0])
         for f in range(f_min, f_max):
             s_min, s_max = parse_min_max_range(oct[1])
