@@ -35,6 +35,7 @@ class ConnectionWorker(threading.Thread):
             return dbs, version
         except ConnectionFailure:
             print(f"[{ip}]: connection failed")
+            return None, None
 
     def dump_databases(self, ip: str, dbs: List[str]) -> List[str]:
         base_ip_dir = f"{self.options.out}/{ip}"
@@ -76,7 +77,6 @@ class ConnectionWorker(threading.Thread):
                   f"\t└─ Databases: {dbs}\n" +
                   dumped_str)
 
-
     def run(self):
         while True:
             ip = self.queue.get()
@@ -84,11 +84,12 @@ class ConnectionWorker(threading.Thread):
             try:
                 client = MongoClient(ip, serverSelectionTimeoutMS=3000)
                 dbs, version = self.test_open_connection(client, ip)
-                dumped_dbs = []
-                if self.options.dump:
-                    dumped_dbs = self.dump_databases(ip, dbs)
+                if dbs is not None and version is not None:
+                    dumped_dbs = []
+                    if self.options.dump:
+                        dumped_dbs = self.dump_databases(ip, dbs)
 
-                self.log_opened_connection(ip, version, dbs, dumped_dbs)
+                    self.log_opened_connection(ip, version, dbs, dumped_dbs)
                 self.close(client)
                 self.queue.task_done()
             except ConfigurationError:

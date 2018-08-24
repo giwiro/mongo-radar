@@ -9,12 +9,7 @@ from writer import write_log
 DEFAULT_WORKERS = 4
 DEFAULT_OUT_DIR = "out"
 DEFAULT_OUT_FILE = "loot.log"
-DEFAULT_IPS = ["127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1",
-               "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1",
-               "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1",
-               "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1",
-               "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1",
-               "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1"]
+DEFAULT_IPS = ["127.0.0.1"]
 
 # Create argument parser
 parser = argparse.ArgumentParser(prog="mongo-radar",
@@ -61,8 +56,33 @@ def print_banner():
 """)
 
 
-def parse_str_ips(ips: str) -> List[str]:
-    ...
+def parse_min_max_range(range: str) -> (int, int):
+    c = range.split("-")
+    if len(c) > 1:
+        return int(c[0]), int(c[1]) + 1
+    else:
+        return int(c[0]), int(c[0]) + 1
+
+
+# Very naive ip range parsing
+def parse_str_ips(ips_str: str) -> List[str]:
+    ips = []
+    raw_ips = ips_str.split(",")
+    for raw_ip in raw_ips:
+        oct = raw_ip.split(".")
+        if len(oct) != 4:
+            raise Exception("Malformed ip")
+
+        f_min, f_max = parse_min_max_range(oct[0])
+        for f in range(f_min, f_max):
+            s_min, s_max = parse_min_max_range(oct[1])
+            for s in range(s_min, s_max):
+                t_min, t_max = parse_min_max_range(oct[2])
+                for t in range(t_min, t_max):
+                    fo_min, fo_max = parse_min_max_range(oct[3])
+                    for fo in range(fo_min, fo_max):
+                        ips.append(f"{f}.{s}.{t}.{fo}")
+    return ips
 
 
 if __name__ == "__main__":
