@@ -9,7 +9,12 @@ from writer import write_log
 DEFAULT_WORKERS = 4
 DEFAULT_OUT_DIR = "out"
 DEFAULT_OUT_FILE = "loot.log"
-DEFAULT_IPS = ["127.0.0.1", "127.0.0.2", "127.0.0.3", "127.0.0.4", "127.0.0.5"]
+DEFAULT_IPS = ["127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1",
+               "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1",
+               "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1",
+               "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1",
+               "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1",
+               "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1", "127.0.0.1"]
 
 # Create argument parser
 parser = argparse.ArgumentParser(prog="mongo-radar",
@@ -28,8 +33,9 @@ parser.add_argument("--workers", dest="input_workers", type=int,
 parser.add_argument("--dump", dest="input_dump", action="store_true",
                     help="Dumps all the databases found and saves it into out directory.")
 
-parser.add_argument("--kidnap", dest="input_account", type=str,
-                    help="Monero account to show in the ransom after kidnap the database (including local and admin).")
+
+# parser.add_argument("--kidnap", dest="input_account", type=str,
+#                    help="Monero account to show in the ransom after kidnap the database (including local and admin).")
 
 def print_banner():
     print("""
@@ -74,7 +80,10 @@ if __name__ == "__main__":
     if args.input_ips is not None:
         ips = parse_str_ips(args.input_ips)
 
-    options = ConnectionWorkerOptions(out=args.input_out, file=DEFAULT_OUT_FILE)
+    options = ConnectionWorkerOptions(out=args.input_out, file=DEFAULT_OUT_FILE,
+                                      dump=args.input_dump)
+
+    print(options)
 
     # Create out dir if not exists
     if not os.path.exists(options.out):
@@ -92,7 +101,7 @@ if __name__ == "__main__":
         worker.setDaemon(True)
         worker.start()
 
-    for ip in DEFAULT_IPS:
+    for ip in ips:
         print(f"Enqueued ip: {ip}")
         q.put(ip)
 

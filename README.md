@@ -51,10 +51,6 @@ optional arguments:
                         doing the jobs simultaneously.
   --dump                Dumps all the databases found and saves it into out
                         directory.
-  --kidnap INPUT_ACCOUNT
-                        Monero account to show in the ransom after kidnap the
-                        database (including local and admin).
-
 
 ```
 
@@ -72,7 +68,7 @@ remember that attacking targets without prior consent is illegal and punished by
 - python 3
 - pipenv
 - make
-- mongodump
+- mongodump (provided in the package `mongo-tools`)
 
 
 ## Install
