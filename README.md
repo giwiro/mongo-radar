@@ -29,7 +29,7 @@ There are tons of mongo databases without any type of authentication out there i
 a lot of them [get hacked](https://docs.google.com/spreadsheets/d/1QonE9oeMOQHVh8heFIyeqrjfKEViL0poLnY8mAakKhM/edit#gid=1781677175),
 that's why we should be really careful when configuring the Database.
 
-Just **for research purposes** I developed an automated tool to discover, dumps and symmetric encrypt all the collections
+Just **for research purposes** I developed an automated tool to discover and dump all the collections
 in the discovered mongodb list. 
 In order to stay anonymous we use [Tor](https://www.torproject.org/) service running as a SOCK4 proxy,
 and [proxychains](http://proxychains.sourceforge.net/) to capture all tcp requests made by `mongo-radar`

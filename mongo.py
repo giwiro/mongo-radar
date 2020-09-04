@@ -18,9 +18,9 @@ class ConnectionWorkerOptions(NamedTuple):
 
 
 class ConnectionWorker(threading.Thread):
-
-    def __init__(self, queue: Queue, id: int,
-                 options: ConnectionWorkerOptions):
+    def __init__(
+        self, queue: Queue, id: int, options: ConnectionWorkerOptions
+    ):
         threading.Thread.__init__(self)
         self.queue = queue
         self.id = id
@@ -52,7 +52,9 @@ class ConnectionWorker(threading.Thread):
             if not os.path.exists(base_ip_dir):
                 os.makedirs(base_ip_dir)
         except FileExistsError:
-            print(f"[{ip}]: File exists error, check if you got the same ip in yer input")
+            print(
+                f"[{ip}]: File exists error, check if you got the same ip in yer input"
+            )
 
         for db in dbs:
             cmd = f"mongodump --quiet --host {ip} -d {db} -o {base_ip_dir}/{db}-{timestr}"
@@ -66,25 +68,32 @@ class ConnectionWorker(threading.Thread):
 
         return dumped
 
-    def log_opened_connection(self, ip: str, version: str,
-                              dbs: List[str], dumped_dbs: List[str]):
+    def log_opened_connection(
+        self, ip: str, version: str, dbs: List[str], dumped_dbs: List[str]
+    ):
         dumped_str = ""
         if len(dumped_dbs) > 1:
-            dumped_str = "\n".join([f"[{ip}]: Dumped '{d_db}'" for d_db in dumped_dbs]) + "\n"
+            dumped_str = (
+                "\n".join([f"[{ip}]: Dumped '{d_db}'" for d_db in dumped_dbs])
+                + "\n"
+            )
 
-        write_log(f"{self.options.out}/{self.options.file}",
-                  f"------------------------------------------------\n"
-                  f"[{ip}]: opened connection.\n"
-                  f"\t├─ Version: {version}\n"
-                  f"\t└─ Databases: {dbs}\n" +
-                  dumped_str)
+        write_log(
+            f"{self.options.out}/{self.options.file}",
+            f"[{ip}]: opened connection.\n"
+            f"\t├─ Version: {version}\n"
+            f"\t└─ Databases: {dbs}\n" + f"{dumped_str}\n"
+            f"------------------------------------------------\n",
+        )
 
     def run(self):
         while True:
             ip = self.queue.get()
             print(f"[Worker {self.id}] => Started {ip}")
             try:
-                client = MongoClient(ip, serverSelectionTimeoutMS=DEFAULT_TIMEOUT)
+                client = MongoClient(
+                    ip, serverSelectionTimeoutMS=DEFAULT_TIMEOUT
+                )
                 dbs, version = self.test_open_connection(client, ip)
                 if dbs is not None and version is not None:
                     dumped_dbs = []

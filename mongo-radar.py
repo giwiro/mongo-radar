@@ -12,28 +12,45 @@ DEFAULT_OUT_FILE = "loot.log"
 DEFAULT_IPS = ["127.0.0.1"]
 
 # Create argument parser
-parser = argparse.ArgumentParser(prog="mongo-radar",
-                                 description="Script to scan and do some operations over default unauthorized public \
-                                 mongo databases.")
+parser = argparse.ArgumentParser(
+    prog="mongo-radar",
+    description="Script to scan and do some operations over default unauthorized public \
+                                 mongo databases.",
+)
 
-parser.add_argument("--out", dest="input_out", type=str, default=DEFAULT_OUT_DIR,
-                    help="Define the ouput folder location.")
+parser.add_argument(
+    "--out",
+    dest="input_out",
+    type=str,
+    default=DEFAULT_OUT_DIR,
+    help="Define the ouput folder location.",
+)
 
-parser.add_argument("--ips", dest="input_ips", type=str,
-                    help="Define list of ips or range of ips to scan. Ex: 127.0.0.1,127.0.0.2-255")
+parser.add_argument(
+    "--ips",
+    dest="input_ips",
+    type=str,
+    help="Define list of ips or range of ips to scan. Ex: 127.0.0.1,127.0.0.2-255",
+)
 
-parser.add_argument("--workers", dest="input_workers", type=int,
-                    help="Define the number of worker threads (> 4) that will be doing the jobs simultaneously.")
+parser.add_argument(
+    "--workers",
+    dest="input_workers",
+    type=int,
+    help="Define the number of worker threads (> 4) that will be doing the jobs simultaneously.",
+)
 
-parser.add_argument("--dump", dest="input_dump", action="store_true",
-                    help="Dumps all the databases found and saves it into out directory.")
+parser.add_argument(
+    "--dump",
+    dest="input_dump",
+    action="store_true",
+    help="Dumps all the databases found and saves it into out directory.",
+)
 
-
-# parser.add_argument("--kidnap", dest="input_account", type=str,
-#                    help="Monero account to show in the ransom after kidnap the database (including local and admin).")
 
 def print_banner():
-    print("""
+    print(
+        """
 
          ,-.                                                                       
         / \\  `.  __..-,O    88888b.d88b.  .d88b. 88888b.  .d88b.  .d88b.          
@@ -53,7 +70,8 @@ def print_banner():
     __//__||__\\\\__                                                               
    '--------------'                                                                
 
-""")
+"""
+    )
 
 
 def parse_min_max_range(range: str) -> (int, int):
@@ -101,8 +119,9 @@ if __name__ == "__main__":
     if args.input_ips is not None:
         ips = parse_str_ips(args.input_ips)
 
-    options = ConnectionWorkerOptions(out=args.input_out, file=DEFAULT_OUT_FILE,
-                                      dump=args.input_dump)
+    options = ConnectionWorkerOptions(
+        out=args.input_out, file=DEFAULT_OUT_FILE, dump=args.input_dump
+    )
 
     print(options)
 
@@ -110,8 +129,10 @@ if __name__ == "__main__":
     if not os.path.exists(options.out):
         os.makedirs(options.out)
 
-    write_log(f"{options.out}/{options.file}",
-              f"=========== | {datetime.now():%Y-%m-%d %H:%M:%S} |  ===========\n")
+    write_log(
+        f"{options.out}/{options.file}",
+        f"=========== | {datetime.now():%Y-%m-%d %H:%M:%S} |  ===========\n",
+    )
 
     print_banner()
 
@@ -128,4 +149,4 @@ if __name__ == "__main__":
 
     q.join()
 
-    print("(•̀ᴗ•́)و ̑̑\" => Done, now loot.")
+    print('(•̀ᴗ•́)و ̑̑" => Done, now loot.')

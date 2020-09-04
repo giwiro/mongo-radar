@@ -1,6 +1,7 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 PROXYCHAINS_BIN=proxychains4
+MONGODUMP_BIN=mongodump
 TOR_SOCK_HOST=localhost:9050
 
 TT=$(curl --socks5 "$TOR_SOCK_HOST" --socks5-hostname "$TOR_SOCK_HOST" \
@@ -9,7 +10,12 @@ TT=$(curl --socks5 "$TOR_SOCK_HOST" --socks5-hostname "$TOR_SOCK_HOST" \
 if [ -n "$TT" ]; then
     echo "(っ▀¯▀)つ Tor working"
     if command -v $PROXYCHAINS_BIN 2> /dev/null; then
-    	proxychains4 pipenv run python mongo-radar.py "$@"
+      if command -v $MONGODUMP_BIN 2> /dev/null; then
+    	  proxychains4 pipenv run python mongo-radar.py "$@"
+    	else
+    	  echo "Error, please install mongodb (mongodump) ¯\_(ツ)_/¯ "
+        exit 1
+    	fi
     else
         echo "Error, please install proxychains4 ¯\_(ツ)_/¯ "
         exit 1
