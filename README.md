@@ -18,8 +18,8 @@
     __//__||__\\__                                                               
    '--------------'                                                                
 ```
-Multithread python3 script that scans and do some operations over provided ips, and looks for default mongodb 
-unauthorized access, through Tor sock4 proxy using proxychains and writes it into a log file.
+Multithread python3 script that scans and dumps mongo databases with default access (no password), 
+through Tor sock4 proxy using proxychains and writes it into a log file.
 
 
 
